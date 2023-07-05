@@ -3,11 +3,15 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const mongoose = require('mongoose');
 
-require('dotenv').config()
+require('dotenv').config();
 
 // app
-const app = express()
+const app = express();
+
+// db mongoose use version 7.3.1 so simple not use index or useNewParser
+mongoose.connect(process.env.MONGO_URI).then(() => console.log('DB Connected'));
 
 // middlewares
 app.use(morgan('dev'));
