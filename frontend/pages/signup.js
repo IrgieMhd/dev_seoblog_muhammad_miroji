@@ -1,15 +1,15 @@
 import Layout from "../components/Layout";
 import Link from 'next/link';
 
-const Index = () => {
+const Signup = () => {
   return (
     <Layout>
-      <h2>Halaman Index</h2>
-      <Link href="/signup">
-        Signup
+      <h2>Halaman Register</h2>
+      <Link href="/">
+        Home
       </Link>
     </Layout>
   )
 }
 
-export default Index
+export default Signup
