@@ -47,7 +47,7 @@ const userSchema = new mongoose.Schema(
         },
         resetPasswordLink: {
             data: String,
-            default: '' // mongoose 6.11.2
+            default: '' // mongooose 6.11.2
             //default: {} // mongoose 7.3.2
             
         }
