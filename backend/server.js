@@ -14,8 +14,13 @@ const authRoutes = require('./routes/auth')
 // app
 const app = express();
 
-// db mongoose use version 7.3.1 so simple not use index or useNewParser
-mongoose.connect(process.env.MONGO_URI).then(() => console.log('DB Connected'));
+// db mongoose use version 6.11.2
+mongoose.set("strictQuery", false);
+mongoose.connect(process.env.MONGO_URI,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  }).then(() => console.log('DB Connected'));
 
 // middlewares
 app.use(morgan('dev'));
@@ -23,8 +28,8 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 // cors
-if(process.env.NODE_ENV == 'development') {
-  app.use(cors({ origin: `${process.env.CLIENT_URL}`}));
+if (process.env.NODE_ENV == 'development') {
+  app.use(cors({ origin: `${process.env.CLIENT_URL}` }));
 }
 
 // routes middleware
