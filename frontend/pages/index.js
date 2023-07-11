@@ -1,4 +1,11 @@
-// manual setting in instalation next.js
-const Index = () => <h2>Halaman Index</h2>
+import Layout from "../components/Layout"
+
+const Index = () => {
+  return (
+    <Layout>
+      <h2>Halaman Index</h2>
+    </Layout>
+  )
+}
 
 export default Index
