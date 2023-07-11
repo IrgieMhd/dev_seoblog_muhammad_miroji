@@ -20,12 +20,23 @@ exports.signup = (req, res) => {
           error: err
         })
       }
+      // res.json({ user: success }) 
+      /* input res.json is
+      "user": {
+      "username": "6lqb_osvp",
+      "name": "Muhammad Miroji",
+      "email": "miroji@gmail.com",
+      "profile": "http://localhost:3000/profile/6lqb_OSvp",
+      "hashed_password": "bf750747b4255053090bf324a8ede1dc05ae558f",
+      "salt": "694455162362",
+      "_id": "64accd59325f986110c1a82d",
+      "__v": 0
+      }
+      */
+
       res.json({
-        user: success
+        message: "Sign Up Success, Please Sign In!"
       })
-      // res.json({
-      // message: "Sign Up Success, Please Sign In!"
-      // })
     })
   })
 }
