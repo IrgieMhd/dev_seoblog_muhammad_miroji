@@ -1,13 +1,12 @@
 import Layout from "../components/Layout";
+import SignupComp from "../components/auth/SignupComp";
 import Link from 'next/link';
 
 const Signup = () => {
   return (
     <Layout>
       <h2>Halaman Register</h2>
-      <Link href="/">
-        Home
-      </Link>
+      <SignupComp />
     </Layout>
   )
 }
