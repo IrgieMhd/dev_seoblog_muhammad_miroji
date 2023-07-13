@@ -1,5 +1,7 @@
 const User = require('../models/user');
 const shortId = require('shortid');
+const jwt = require('jsonwebtoken');
+const expressJWT = require('express-jwt')
 
 exports.signup = (req, res) => {
   User.findOne({ email: req.body.email }).exec((err, user) => {
@@ -37,6 +39,33 @@ exports.signup = (req, res) => {
       res.json({
         message: "Sign Up Success, Please Sign In!"
       })
+    })
+  })
+}
+
+exports.signin = (req, res) => {
+  const { email, password } = req.body;
+  // check if user exist
+  User.findOne({ email }).exec((err, user) => {
+    if (err || !user) {
+      return res.status(400).json({
+        error: "User with email doesn't exist. Please Signup!"
+      })
+    }
+    // authenticate
+    if (!user.authenticate(password)) {
+      return res.status(400).json({
+        error: "Email and password do not match!!"
+      })
+    }
+    // generate a token and send to client
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+
+    res.cookie('token', token, { expiresIn: '1d' })
+    const { _id, username, name, email, role } = user
+    return res.json({
+      token,
+      user: { _id, username, name, email, role } // without this info will complete
     })
   })
 }
