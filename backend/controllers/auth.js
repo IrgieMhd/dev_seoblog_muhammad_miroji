@@ -1,7 +1,7 @@
 const User = require('../models/user');
 const shortId = require('shortid');
-const jwt = require('jsonwebtoken');
-const expressJWT = require('express-jwt')
+const jwto = require('jsonwebtoken'); // rename jwt token it doesn't crash
+const { expressjwt: jwt } = require("express-jwt"); // 2023 update documentation
 
 exports.signup = (req, res) => {
   User.findOne({ email: req.body.email }).exec((err, user) => {
@@ -59,7 +59,7 @@ exports.signin = (req, res) => {
       })
     }
     // generate a token and send to client
-    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+    const token = jwto.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
 
     res.cookie('token', token, { expiresIn: '1d' })
     const { _id, username, name, email, role } = user
@@ -69,6 +69,22 @@ exports.signin = (req, res) => {
     })
   })
 }
+
+exports.signout = (req, res) => {
+  res.clearCookie('token');
+  res.json({
+    message: 'Signout success'
+  });
+};
+
+exports.requireSignin = jwt({
+  secret: process.env.JWT_SECRET,
+  algorithms: ["HS256"], // adding documentation library update 2023
+  userProperty: 'auth'
+});
+
+
+
 
 /* exports.signup = (req, res) => {
   const {name, email, password} = req.body
