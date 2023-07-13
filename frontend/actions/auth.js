@@ -1,5 +1,6 @@
 import fetch from 'isomorphic-fetch';
 import { API } from '../config';
+import cookie from 'js-cookie';
 
 export const signup = (user) => {
   return fetch(`${API}/signup`, {
@@ -32,3 +33,71 @@ export const signin = (user) => {
 }
 
 // npm i isomorphic-fetch
+
+/*-----------------------------------------*/
+
+// set cookie
+export const setCookie = (key, value) => {
+  if (process.browser) {
+    cookie.set(key, value, {
+      expires: 1
+    });
+  }
+};
+
+export const removeCookie = key => {
+  if (process.browser) {
+    cookie.remove(key, {
+      expires: 1
+    });
+  }
+};
+
+// get cookie
+export const getCookie = key => {
+  if (process.browser) {
+    cookie.get(key);
+  }
+};
+
+// localstorage
+export const setLocalStorage = (key, value) => {
+  if (process.browser) {
+    localStorage.setItem(key, JSON.stringify(value));
+  }
+};
+
+export const removeLocalStorage = key => {
+  if (process.browser) {
+    localStorage.removeItem(key);
+  }
+};
+
+// autheticate user bypass data to cookie and localstorage
+export const authenticate = (data, next) => {
+  setCookie('token', data.token);
+  setLocalStorage('user', data.user);
+  next();
+};
+
+export const isAuth = () => {
+  if (process.browser) {
+    const cookieChecked = getCookie('token');
+    if (cookieChecked) {
+      if (localStorage.getItem('user')) {
+        return JSON.parse(localStorage.getItem('user'));
+      } else {
+        return false;
+      }
+    }
+  }
+};
+
+// process.browser is deprecated, but still running, if next error can use bellow this
+/*
+if (typeof window !== "undefined") {
+  // Write your client-side statements here.
+  window.localStorage.getItem("key");
+  window.localStorage.setItem("key", "value");
+}
+*/
