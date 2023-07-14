@@ -71,7 +71,7 @@ export const removeCookie = key => {
 export const getCookie = key => {
   if (process.browser) {
     return cookie.get(key);
-    // pongkol salah satu masalah hydrasi ketika return get cookie
+    // pongkoll salah satu masalah hydrasi ketika return get cookie
     // alternatif setting _app.tsx untuk dynamic render html 
   }
 };
