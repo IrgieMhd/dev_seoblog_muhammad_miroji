@@ -20,5 +20,5 @@ export default dynamic(() => Promise.resolve(MyApp), {
 
 //Warning: viewport meta tags should not be used in _document.js's <Head>. https://nextjs.org/docs/messages/no-document-viewport-meta
 
-// HYDRATION render HTML error semakin menjadi jadi dalam next.js, solusi
+// HYDRATION render HTML error semakin menjadi jadi dalam next.js, solusinya
 // menggunakan dynamic dan App Props dalam _app.tsx 
