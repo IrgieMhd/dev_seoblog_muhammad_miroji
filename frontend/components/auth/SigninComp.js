@@ -5,7 +5,7 @@ import Router from 'next/router';
 const SigninComp = () => {
   const [values, setValues] = useState({
     email: 'miroji@gmail.com',
-    password: 'semangat',
+    password: 'blablabla',
     error: '',
     loading: false,
     message: '',

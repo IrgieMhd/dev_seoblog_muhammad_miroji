@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { APP_NAME } from '../config';
+import Router from 'next/router';
 import Link from 'next/link';
+import { signout, isAuth } from '../actions/auth';
 import {
   Collapse,
   Navbar,
   NavbarToggler,
-  NavbarBrand,
   Nav,
   NavItem,
   NavLink,
@@ -27,16 +28,32 @@ const Header = () => {
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
-            <NavItem>
-              <Link legacyBehavior href='/signin'>
-                <NavLink>Login</NavLink>
-              </Link>
-            </NavItem>
-            <NavItem>
-              <Link legacyBehavior href='/signup'>
-                <NavLink>Register</NavLink>
-              </Link>
-            </NavItem>
+
+            {!isAuth() &&
+              <React.Fragment>
+                <NavItem>
+                  <Link legacyBehavior href='/signin'>
+                    <NavLink>Login</NavLink>
+                  </Link>
+                </NavItem>
+                <NavItem>
+                  <Link legacyBehavior href='/signup'>
+                    <NavLink>Register</NavLink>
+                  </Link>
+                </NavItem>
+              </React.Fragment>
+            }
+
+            {isAuth() && (
+              <NavItem>
+                <NavLink
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => signout(() => Router.replace('/signin'))}>
+                  Signout
+                </NavLink>
+              </NavItem>
+            )}
+
           </Nav>
         </Collapse>
       </Navbar>
