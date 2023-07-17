@@ -1,5 +1,6 @@
 const Category = require('../models/category');
 const slugify = require('slugify'); // new table
+const { errorHandler } = require('../helpers/dbErrorHandler');
 
 exports.create = (req, res) => {
   const { name } = req.body;
@@ -10,9 +11,16 @@ exports.create = (req, res) => {
   category.save((err, data) => {
     if (err) {
       return res.status(400).json({
-        error: err
+        error: errorHandler(err)
       });
     }
     res.json(data);
   });
 };
+
+/*
+return res.status(400).json({
+error: errorHandler(err)});
+ouput:
+"error": "11000 duplicate key error collection: test.categories index: slug already exists"
+*/
