@@ -2,8 +2,9 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js",
   "/user": "pages/user.js",
   "/admin": "pages/admin.js",
+  "/signup": "pages/signup.js",
+  "/": "pages/index.js",
   "/signin": "pages/signin.js"
 }
