@@ -80,8 +80,42 @@ exports.signout = (req, res) => {
 exports.requireSignin = jwt({
   secret: process.env.JWT_SECRET,
   algorithms: ["HS256"], // adding documentation library update 2023
-  userProperty: 'auth'
+  requestProperty: 'user',
+  //userProperty: 'auth' // cannot property reading _id or showing only {} in console
 });
+
+exports.authMiddleware = (req, res, next) => {
+  const authUserId = req.user._id;
+  User.findById({ _id: authUserId }).exec((err, user) => {
+    if (err || !user) {
+      return res.status(400).json({
+        error: 'User not found'
+      });
+    }
+    req.profile = user;
+    next();
+  });
+};
+
+exports.adminMiddleware = (req, res, next) => {
+  const adminUserId = req.user._id;
+  User.findById({ _id: adminUserId }).exec((err, user) => {
+    if (err || !user) {
+      return res.status(400).json({
+        error: 'User not found'
+      });
+    }
+
+    if (user.role !== 1) {
+      return res.status(400).json({
+        error: 'Admin resource. Access denied!'
+      });
+    }
+
+    req.profile = user;
+    next();
+  });
+};
 
 
 
