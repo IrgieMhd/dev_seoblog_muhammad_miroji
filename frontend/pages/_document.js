@@ -9,7 +9,8 @@ export default function Document() {
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" />
+        {/*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" />*/}
+        <link rel="stylesheet" href="/static/global.css" />
       </Head>
       <body>
         <Main />
