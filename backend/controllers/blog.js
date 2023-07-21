@@ -7,6 +7,7 @@ const stripHtml = require('string-strip-html')
 const _ = require('lodash')
 const fs = require('fs')
 const { errorHandler } = require('../helpers/dbErrorHandler')
+const { smartTrim } = require('../helpers/blog')
 
 
 exports.create = (req, res) => {
@@ -48,6 +49,7 @@ exports.create = (req, res) => {
     let blog = new Blog()
     blog.title = title
     blog.body = body
+    blog.excerpt = smartTrim(body, 330, ' ', ' ...')
     blog.slug = slugify(title).toLowerCase() // replace with dash -
     blog.mtitle = `${title} | ${process.env.APP_NAME}`
     blog.mdesc = stripHtml(body.toString().substring(0, 160))
