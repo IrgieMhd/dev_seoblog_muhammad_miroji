@@ -2,5 +2,10 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js"
+  "/": "pages/index.js",
+  "/signin": "pages/signin.js",
+  "/signup": "pages/signup.js",
+  "/user": "pages/user.js",
+  "/admin": "pages/admin.js",
+  "/admin/crud/category-tag": "pages/admin/crud/category-tag.js"
 }
