@@ -108,3 +108,37 @@ exports.create = (req, res) => {
    setting kembali ke es 6 module dari 0 untuk komponent komponent yang lain
    better saya turunkan versi string-strip-html
 */
+
+// list, listAllBlogsCategoriesTags, read, remove, update
+
+exports.list = (req, res) => {
+  Blog.find({})
+    .populate('categories', '_id name slug')
+    .populate('tags', '_id name slug')
+    .populate('postedBy', '_id name username')
+    .select('_id title slug excerpt categories tags postedBy createdAt updatedAt')
+    .exec((err, data) => {
+      if (err) {
+        return res.json({
+          error: errorHandler(err)
+        });
+      }
+      res.json(data);
+    });
+};
+
+exports.listAllBlogsCategoriesTags = (req, res) => {
+  //
+};
+
+exports.read = (req, res) => {
+  //
+};
+
+exports.remove = (req, res) => {
+  //
+};
+
+exports.update = (req, res) => {
+  //
+};
