@@ -3,6 +3,8 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/admin": "pages/admin.js",
-  "/signin": "pages/signin.js",
-  "/admin/crud/blog": "pages/admin/crud/blog.js"
+  "/": "pages/index.js",
+  "/admin/crud/blog": "pages/admin/crud/blog.js",
+  "/admin/crud/category-tag": "pages/admin/crud/category-tag.js",
+  "/signin": "pages/signin.js"
 }
