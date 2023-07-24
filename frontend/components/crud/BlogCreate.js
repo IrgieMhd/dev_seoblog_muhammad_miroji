@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Router from 'next/router';
 import dynamic from 'next/dynamic';
 import { withRouter } from 'next/router';
@@ -11,13 +11,54 @@ const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import '../../node_modules/react-quill/dist/quill.snow.css';
 
 
-const CreateBlog = ({router}) => {
-  return (
-    <div>
-      <h2>create blog form</h2>
-            {JSON.stringify(router)}
-    </div>
-  );
+const CreateBlog = ({ router }) => {
+  const [body, setBody] = useState({})
+  const [values, setValues] = useState({
+    error: '',
+    sizeError: '',
+    success: '',
+    formData: '',
+    title: '',
+    hidePublishButton: false
+  })
+
+  const { error, sizeError, success, formData, title, hidePublishButton } = values
+
+  const publishBlog = (e) => {
+    e.preventDefault()
+    console.log('ready to publish blog')
+  }
+
+  const handleChange = name => e => {
+    console.log(e.target.value)
+  }
+
+  const handleBody = e => {
+    console.log(e)
+  }
+
+  const createBlogForm = () => {
+    return (
+      <form onSubmit={publishBlog}>
+        <div className="form-group">
+          <label className='text-muted'>Title</label>
+          <input
+            type="text"
+            className="form-control"
+            value={title}
+            onChange={handleChange('title')} />
+        </div>
+
+        <div className="form-group">
+          <ReactQuill value={body} placeholder='Type something amazing' onChange={handleBody} />
+        </div>
+
+        <button type='submit' className="btn btn-primary">Publish</button>
+      </form>
+    )
+  }
+
+  return <div>{createBlogForm()}</div>;
 };
 
 export default withRouter(CreateBlog);
