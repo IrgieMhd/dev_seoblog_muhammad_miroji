@@ -36,6 +36,14 @@ const Header = () => {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
 
+            <React.Fragment>
+              <NavItem>
+                <Link legacyBehavior href='/blogs'>
+                  <NavLink>Blogs</NavLink>
+                </Link>
+              </NavItem>
+            </React.Fragment>
+
             {!isAuth() &&
               <React.Fragment>
                 <NavItem>
@@ -50,6 +58,7 @@ const Header = () => {
                 </NavItem>
               </React.Fragment>
             }
+
 
             {isAuth() && isAuth().role === 0 && (
               <NavItem>

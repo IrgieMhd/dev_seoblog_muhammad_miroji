@@ -27,10 +27,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/admin/crud/blog": [
+    "/blogs": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/admin/crud/blog.js"
+      "static/chunks/pages/blogs.js"
     ],
     "/signin": [
       "static/chunks/webpack.js",
