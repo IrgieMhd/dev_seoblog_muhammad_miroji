@@ -3,7 +3,7 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/admin": "pages/admin.js",
-  "/signin": "pages/signin.js",
-  "/": "pages/index.js",
-  "/blogs": "pages/blogs.js"
+  "/admin/crud/blog": "pages/admin/crud/blog.js",
+  "/blogs": "pages/blogs.js",
+  "/signin": "pages/signin.js"
 }
