@@ -4,4 +4,12 @@
 
 .ql-editor {
   min-height: 300px;
-} /* taking css library react quill node modules */
+}
+
+/* taking css library react quill node modules */
+
+.featured-image {
+  width: 100%;
+  max-height: 500px;
+  object-fit: cover;
+}
