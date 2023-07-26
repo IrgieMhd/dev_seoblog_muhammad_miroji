@@ -2,8 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/blogs/[slug]": "pages/blogs/[slug].js",
-  "/signin": "pages/signin.js",
   "/blogs": "pages/blogs.js",
-  "/signup": "pages/signup.js"
+  "/blogs/[slug]": "pages/blogs/[slug].js"
 }
