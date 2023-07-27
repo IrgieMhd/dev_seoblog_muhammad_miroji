@@ -10,6 +10,7 @@ import { singleBlog, updateBlog } from '../../actions/blog';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import '../../node_modules/react-quill/dist/quill.snow.css';
 import { QuillModules, QuillFormats } from '../../helpers/quill';
+import { API } from '../../config';
 
 const BlogUpdate = ({ router }) => {
   const [body, setBody] = useState('');
@@ -30,6 +31,7 @@ const BlogUpdate = ({ router }) => {
   });
 
   const { error, success, formData, title } = values;
+  const token = getCookie('token');
 
   useEffect(() => {
     setValues({ ...values, formData: new FormData() });
@@ -185,9 +187,36 @@ const BlogUpdate = ({ router }) => {
     }
   };
 
-  const editBlog = () => {
-    console.log('update blog');
+  const editBlog = e => {
+    //console.log('update blog');
+    e.preventDefault();
+    updateBlog(formData, token, router.query.slug).then(data => {
+      if (data.error) {
+        setValues({ ...values, error: data.error });
+      } else {
+        setValues({ ...values, title: '', success: `Blog titled "${data.title}" is successfully updated` });
+        if (isAuth() && isAuth().role === 1) {
+          // Router.replace(`/admin/crud/${router.query.slug}`);
+          Router.replace(`/admin`);
+        } else if (isAuth() && isAuth().role === 0) {
+          // Router.replace(`/user/crud/${router.query.slug}`);
+          Router.replace(`/user`);
+        }
+      }
+    });
   };
+
+  const showError = () => (
+    <div className="alert alert-danger" style={{ display: error ? '' : 'none' }}>
+      {error}
+    </div>
+  );
+
+  const showSuccess = () => (
+    <div className="alert alert-success" style={{ display: success ? '' : 'none' }}>
+      {success}
+    </div>
+  );
 
   const updateBlogForm = () => {
     return (
@@ -226,12 +255,13 @@ const BlogUpdate = ({ router }) => {
         <div className="col-md-8">
           {updateBlogForm()}
           <div className="pt-3">
-            <p>show success and error msg</p>
-            <hr />
-            {JSON.stringify(categories)}
-            <hr />
-            {JSON.stringify(tags)}
+            {showSuccess()}
+            {showError()}
           </div>
+
+          {body && (
+            <img src={`${API}/blog/photo/${router.query.slug}`} alt={title} style={{ width: '100%' }} />
+          )}
         </div>
 
         <div className="col-md-4">
