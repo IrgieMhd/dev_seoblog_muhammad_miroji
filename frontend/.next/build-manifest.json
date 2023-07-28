@@ -27,15 +27,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/blogs.js"
     ],
-    "/categories/[slug]": [
+    "/blogs/[slug]": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/categories/[slug].js"
+      "static/chunks/pages/blogs/[slug].js"
     ],
-    "/signin": [
+    "/tags/[slug]": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/signin.js"
+      "static/chunks/pages/tags/[slug].js"
     ]
   },
   "ampFirstPages": []
