@@ -22,6 +22,16 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
+    "/admin": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/admin.js"
+    ],
+    "/admin/crud/[slug]": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/admin/crud/[slug].js"
+    ],
     "/blogs": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
