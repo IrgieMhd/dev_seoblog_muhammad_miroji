@@ -3,7 +3,5 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/": "pages/index.js",
-  "/blogs": "pages/blogs.js",
-  "/blogs/[slug]": "pages/blogs/[slug].js",
-  "/tags/[slug]": "pages/tags/[slug].js"
+  "/blogs": "pages/blogs.js"
 }
