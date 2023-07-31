@@ -27,20 +27,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/blogs.js"
     ],
-    "/profile/[username]": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/profile/[username].js"
-    ],
-    "/signin": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/signin.js"
-    ],
     "/user": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/user.js"
+    ],
+    "/user/update": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/user/update.js"
     ]
   },
   "ampFirstPages": []

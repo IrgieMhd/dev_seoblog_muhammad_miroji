@@ -3,7 +3,6 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/blogs": "pages/blogs.js",
-  "/signin": "pages/signin.js",
   "/user": "pages/user.js",
-  "/profile/[username]": "pages/profile/[username].js"
+  "/user/update": "pages/user/update.js"
 }
