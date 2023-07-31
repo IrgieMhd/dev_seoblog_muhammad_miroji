@@ -27,10 +27,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/blogs.js"
     ],
-    "/signin": [
+    "/profile/[username]": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/signin.js"
+      "static/chunks/pages/profile/[username].js"
+    ],
+    "/user": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/user.js"
     ],
     "/user/update": [
       "static/chunks/webpack.js",
