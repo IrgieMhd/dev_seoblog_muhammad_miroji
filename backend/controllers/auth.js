@@ -2,6 +2,7 @@ const User = require('../models/user');
 const shortId = require('shortid');
 const jwto = require('jsonwebtoken'); // rename jwt token it doesn't crash
 const { expressjwt: jwt } = require("express-jwt"); // 2023 update documentation
+const { errorHandler } = require('../helpers/dbErrorHandler');
 
 exports.signup = (req, res) => {
   User.findOne({ email: req.body.email }).exec((err, user) => {
@@ -117,6 +118,23 @@ exports.adminMiddleware = (req, res, next) => {
   });
 };
 
+exports.canUpdateDeleteBlog = (req, res, next) => {
+  const slug = req.params.slug.toLowerCase();
+  Blog.finOne({ slug }).exec((err, data) => {
+    if (err) {
+      return res.status(400).json({
+        error: errorHandler(err)
+      });
+    }
+    let authorizedUser = data.postedBy._id.toString() === req.profile._id.toString();
+    if (!authorizedUser) {
+      return res.status(400).json({
+        error: 'You are not authorized'
+      });
+    }
+    next();
+  });
+};
 
 
 
