@@ -32,10 +32,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/signin.js"
     ],
-    "/user/update": [
+    "/user/crud/blog": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/user/update.js"
+      "static/chunks/pages/user/crud/blog.js"
     ]
   },
   "ampFirstPages": []
