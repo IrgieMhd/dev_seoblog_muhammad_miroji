@@ -79,7 +79,9 @@ exports.update = (req, res) => {
                     error: errorHandler(err)
                 });
             }
-            user.hashed_password = undefined;
+            user.hashed_password = undefined; // not sent password in update & localstorage
+            user.salt = undefined; // not sent salt in update & localstorage
+            user.photo = undefined; // not sent photo in update & localstorage
             res.json(user);
         });
     });
