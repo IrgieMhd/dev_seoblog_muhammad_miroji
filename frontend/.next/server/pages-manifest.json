@@ -2,9 +2,8 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/blogs/[slug]": "pages/blogs/[slug].js",
+  "/admin": "pages/admin.js",
+  "/signin": "pages/signin.js",
   "/blogs": "pages/blogs.js",
-  "/profile/[username]": "pages/profile/[username].js",
-  "/user/crud/blog": "pages/user/crud/blog.js",
-  "/signin": "pages/signin.js"
+  "/user/crud/blog": "pages/user/crud/blog.js"
 }

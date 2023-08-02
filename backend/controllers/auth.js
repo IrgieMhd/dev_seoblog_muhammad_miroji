@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Blog = require('../models/blog');
 const shortId = require('shortid');
 const jwto = require('jsonwebtoken'); // rename jwt token it doesn't crash
 const { expressjwt: jwt } = require("express-jwt"); // 2023 update documentation
@@ -120,7 +121,7 @@ exports.adminMiddleware = (req, res, next) => {
 
 exports.canUpdateDeleteBlog = (req, res, next) => {
   const slug = req.params.slug.toLowerCase();
-  Blog.finOne({ slug }).exec((err, data) => {
+  Blog.findOne({ slug }).exec((err, data) => {
     if (err) {
       return res.status(400).json({
         error: errorHandler(err)
