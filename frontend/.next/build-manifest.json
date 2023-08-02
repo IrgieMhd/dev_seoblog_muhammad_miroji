@@ -27,20 +27,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/admin.js"
     ],
-    "/blogs": [
+    "/admin/crud/category-tag": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/blogs.js"
+      "static/chunks/pages/admin/crud/category-tag.js"
     ],
     "/signin": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/signin.js"
-    ],
-    "/user/crud/blog": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/user/crud/blog.js"
     ]
   },
   "ampFirstPages": []
