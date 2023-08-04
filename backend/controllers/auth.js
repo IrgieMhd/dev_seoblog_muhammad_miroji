@@ -5,6 +5,7 @@ const jwto = require('jsonwebtoken'); // rename jwt token it doesn't crash
 const { expressjwt: jwt } = require("express-jwt"); // 2023 update documentation
 const { errorHandler } = require('../helpers/dbErrorHandler');
 const { createTransport } = require('nodemailer');
+const _ = require('lodash');
 
 
 const transporter = createTransport({
@@ -196,7 +197,41 @@ exports.forgotPassword = (req, res) => {
 };
 
 exports.resetPassword = (req, res) => {
-  //
+  const { resetPasswordLink, newPassword } = req.body;
+
+  if (resetPasswordLink) {
+    jwto.verify(resetPasswordLink, process.env.JWT_RESET_PASSWORD, function (err, decoded) {
+      if (err) {
+        return res.status(401).json({
+          error: 'Expired link. Try again'
+        });
+      }
+      User.findOne({ resetPasswordLink }, (err, user) => {
+        if (err || !user) {
+          return res.status(401).json({
+            error: 'Something went wrong. Try later'
+          });
+        }
+        const updatedFields = {
+          password: newPassword,
+          resetPasswordLink: ''
+        };
+
+        user = _.extend(user, updatedFields);
+
+        user.save((err, result) => {
+          if (err) {
+            return res.status(400).json({
+              error: errorHandler(err)
+            });
+          }
+          res.json({
+            message: `Good! Now you can login with your new password!`
+          });
+        });
+      });
+    });
+  }
 };
 
 

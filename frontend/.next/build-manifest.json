@@ -22,20 +22,20 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/blogs": [
+    "/signin": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/blogs.js"
+      "static/chunks/pages/signin.js"
     ],
-    "/contact": [
+    "/signup": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/contact.js"
+      "static/chunks/pages/signup.js"
     ],
-    "/profile/[username]": [
+    "/user": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/profile/[username].js"
+      "static/chunks/pages/user.js"
     ]
   },
   "ampFirstPages": []
