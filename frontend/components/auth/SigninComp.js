@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { signin, authenticate, isAuth } from '../../actions/auth';
 import Router from 'next/router';
+import Link from 'next/link';
 
 const SigninComp = () => {
   const [values, setValues] = useState({
@@ -82,6 +83,10 @@ const SigninComp = () => {
       {showLoading()}
       {showMessage()}
       {showForm && signinForm()}
+      <br />
+      <Link legacyBehavior href="/auth/password/forgot">
+        <a className="btn btn-outline-danger btn-sm">Forgot password</a>
+      </Link>
     </React.Fragment>
   )
 }
