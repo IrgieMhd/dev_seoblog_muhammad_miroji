@@ -54,7 +54,8 @@ exports.preSignup = (req, res) => {
   });
 };
 
-
+/*
+// signup sebelum menggunakan validasi token alias tidak dipakai lagi
 exports.signup = (req, res) => {
   User.findOne({ email: req.body.email }).exec((err, user) => {
     if (user) {
@@ -88,12 +89,50 @@ exports.signup = (req, res) => {
       }
       */
 
-      res.json({
-        message: "Sign Up Success, Please Sign In!"
-      })
-    })
-  })
+/*
+
+res.json({
+  message: "Sign Up Success, Please Sign In!"
+})
+})
+})
 }
+*/
+
+// signup menggunakan validasi token
+exports.signup = (req, res) => {
+  const token = req.body.token;
+  if (token) {
+    jwto.verify(token, process.env.JWT_ACCOUNT_ACTIVATION, function (err, decoded) {
+      if (err) {
+        return res.status(401).json({
+          error: 'Expired link. Signup again'
+        });
+      }
+
+      const { name, email, password } = jwto.decode(token);
+
+      let username = shortId.generate();
+      let profile = `${process.env.CLIENT_URL}/profile/${username}`;
+
+      const user = new User({ name, email, password, profile, username });
+      user.save((err, user) => {
+        if (err) {
+          return res.status(401).json({
+            error: errorHandler(err)
+          });
+        }
+        return res.json({
+          message: 'Singup success! Please signin'
+        });
+      });
+    });
+  } else {
+    return res.json({
+      message: 'Something went wrong. Try again'
+    });
+  }
+};
 
 exports.signin = (req, res) => {
   const { email, password } = req.body;
