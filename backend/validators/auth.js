@@ -6,7 +6,23 @@ exports.userSignupValidator = [
   body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 charachter long')
 ]
 
-exports.userSigninValidator = [  
+exports.userSigninValidator = [
   body('email').isEmail().withMessage('Must be valid email address'),
   body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 charachter long')
 ]
+
+exports.forgotPasswordValidator = [
+  body('email')
+    .not()
+    .isEmpty()
+    .isEmail()
+    .withMessage('Must be a valid email address')
+];
+
+exports.resetPasswordValidator = [
+  body('newPassword')
+    .not()
+    .isEmpty()
+    .isLength({ min: 6 })
+    .withMessage('Password must be at least 6 characters long')
+];

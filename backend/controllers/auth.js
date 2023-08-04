@@ -4,6 +4,18 @@ const shortId = require('shortid');
 const jwto = require('jsonwebtoken'); // rename jwt token it doesn't crash
 const { expressjwt: jwt } = require("express-jwt"); // 2023 update documentation
 const { errorHandler } = require('../helpers/dbErrorHandler');
+const { createTransport } = require('nodemailer');
+
+
+const transporter = createTransport({
+  host: "smtp-relay.sendinblue.com",
+  port: 587,
+  auth: {
+    user: process.env.EMAIL_TO,
+    pass: process.env.PASSWORD_ME,
+  },
+});
+
 
 exports.signup = (req, res) => {
   User.findOne({ email: req.body.email }).exec((err, user) => {
@@ -135,6 +147,56 @@ exports.canUpdateDeleteBlog = (req, res, next) => {
     }
     next();
   });
+};
+
+
+exports.forgotPassword = (req, res) => {
+  const { email } = req.body;
+
+  User.findOne({ email }, (err, user) => {
+    if (err || !user) {
+      return res.status(401).json({
+        error: 'User with that email does not exist'
+      });
+    }
+
+    const token = jwto.sign({ _id: user._id }, process.env.JWT_RESET_PASSWORD, { expiresIn: '10m' });
+
+    // email
+    const emailData = {
+      from: process.env.EMAIL_FROM,
+      to: email,
+      subject: `Password reset link`,
+      html: `
+          <p>Please use the following link to reset your password:</p>
+          <p>${process.env.CLIENT_URL}/auth/password/reset/${token}</p>
+          <hr />
+          <p>This email may contain sensetive information</p>
+          <p>https://blogseomiroji.com</p>
+      `
+    };
+    // populating the db > user > resetPasswordLink
+    return user.updateOne({ resetPasswordLink: token }, (err, success) => {
+      if (err) {
+        return res.json({ error: errorHandler(err) });
+      } else {
+        transporter.sendMail(emailData, function (error, info) {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log('Email sent: ' + info.response);
+            return res.json({
+              message: `Email has been sent to ${email}. Follow the instructions to reset your password. Link expires in 10min.`
+            });
+          }
+        });
+      }
+    });
+  });
+};
+
+exports.resetPassword = (req, res) => {
+  //
 };
 
 
