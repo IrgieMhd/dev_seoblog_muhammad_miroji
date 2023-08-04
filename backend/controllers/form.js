@@ -43,6 +43,15 @@ exports.contactForm = (req, res) => {
 exports.contactBlogAuthorForm = (req, res) => {
   const { authorEmail, email, name, message } = req.body;
   // console.log(req.body);
+  
+  const transporter = createTransport({
+    host: "smtp-relay.sendinblue.com",
+    port: 587,
+    auth: {
+      user: process.env.EMAIL_TO,
+      pass: process.env.PASSWORD_ME,
+    },
+  });
 
   let maillist = [authorEmail, process.env.EMAIL_TO];
 
