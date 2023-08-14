@@ -8,7 +8,7 @@ const {
   forgotPassword,
   resetPassword,
   preSignup,
-  googleLogin
+  googleLogin  
 } = require('../controllers/auth');
 
 // validators

@@ -6,8 +6,7 @@ const { expressjwt: jwt } = require("express-jwt"); // 2023 update documentation
 const { errorHandler } = require('../helpers/dbErrorHandler');
 const { createTransport } = require('nodemailer');
 const _ = require('lodash');
-const { OAuth2Client } = require('google-auth-library');
-
+const { OAuth2Client } = require('google-auth-library'); // verifyIdToken loginGoogle
 
 const transporter = createTransport({
   host: "smtp-relay.sendinblue.com",
@@ -311,47 +310,55 @@ exports.resetPassword = (req, res) => {
   }
 };
 
-const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-exports.googleLogin = (req, res) => {
-  const idToken = req.body.tokenId;
-  client.verifyIdToken({ idToken, audience: process.env.GOOGLE_CLIENT_ID }).then(response => {
-    // console.log(response)
-    const { email_verified, name, email, jti } = response.payload;
-    if (email_verified) {
-      User.findOne({ email }).exec((err, user) => {
-        if (user) {
-          // console.log(user)
-          const token = jwto.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
-          res.cookie('token', token, { expiresIn: '1d' });
-          const { _id, email, name, role, username } = user;
-          return res.json({ token, user: { _id, email, name, role, username } });
-        } else {
-          let username = shortId.generate();
-          let profile = `${process.env.CLIENT_URL}/profile/${username}`;
-          let password = jti;
-          user = new User({ name, email, profile, username, password });
-          user.save((err, data) => {
-            if (err) {
-              return res.status(400).json({
-                error: errorHandler(err)
-              });
-            }
-            const token = jwto.sign({ _id: data._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
-            res.cookie('token', token, { expiresIn: '1d' });
-            const { _id, email, name, role, username } = data;
-            return res.json({ token, user: { _id, email, name, role, username } });
-          });
-        }
-      });
-    } else {
-      return res.status(400).json({
-        error: 'Google login failed. Try again.'
-      });
-    }
+// problem solving get 3 days
+exports.googleLogin = async (req, res) => {
+  const oAuth2Client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+  const idToken = req.body.tokenId
+
+  const result = await oAuth2Client.verifyIdToken({
+    idToken,
+    expectedAudience: process.env.GOOGLE_CLIENT_ID,
   });
-};
 
+  if (result.payload['sub']) {
+    console.log(`User id: ${result.payload['sub']}`);
+  }
 
+  if (result.payload['email_verified']) {
+    console.log(`Email verified: ${result.payload['email_verified']}`);
+    const { name, email, jti } = result.payload;
+    User.findOne({ email }).exec((err, user) => {
+      if (user) {
+        // console.log(user)
+        const token = jwto.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+        res.cookie('token', token, { expiresIn: '1d' });
+        const { _id, email, name, role, username } = user;
+        return res.json({ token, user: { _id, email, name, role, username } });
+      } else {
+        let username = shortId.generate();
+        let profile = `${process.env.CLIENT_URL}/profile/${username}`;
+        let password = jti;
+        user = new User({ name, email, profile, username, password });
+        user.save((err, data) => {
+          if (err) {
+            return res.status(400).json({
+              error: errorHandler(err)
+            });
+          }
+          const token = jwto.sign({ _id: data._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+          res.cookie('token', token, { expiresIn: '1d' });
+          const { _id, email, name, role, username } = data;
+          return res.json({ token, user: { _id, email, name, role, username } });
+        });
+      }
+    });
+  } else {
+    return res.status(400).json({
+      error: 'Google login failed. Try again.'
+    });
+  }
+  console.log('ID token verified.');
+}
 
 
 /* exports.signup = (req, res) => {
