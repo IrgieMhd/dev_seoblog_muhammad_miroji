@@ -1,1 +1,10 @@
-{}
+{
+  "/_app": "pages/_app.js",
+  "/_error": "pages/_error.js",
+  "/_document": "pages/_document.js",
+  "/categories/[slug]": "pages/categories/[slug].js",
+  "/": "pages/index.js",
+  "/signin": "pages/signin.js",
+  "/blogs/[slug]": "pages/blogs/[slug].js",
+  "/auth/password/forgot": "pages/auth/password/forgot.js"
+}
